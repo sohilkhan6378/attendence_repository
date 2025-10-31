@@ -139,11 +139,13 @@ class AppTheme {
         selectedColor: DesignTokens.light.color.primary.withOpacity(.12),
         labelStyle: base.textTheme.bodyMedium,
       ),
-      cardTheme: const CardTheme(
-        surfaceTintColor: Colors.white,
+      cardTheme: CardThemeData(
+        surfaceTintColor: Colors.transparent,
         elevation: 0,
+        color: DesignTokens.dark.color.surface.withOpacity(.6),
         margin: EdgeInsets.zero,
       ),
+
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.white,
         foregroundColor: DesignTokens.light.color.onSurface,
@@ -177,12 +179,13 @@ class AppTheme {
         selectedColor: DesignTokens.dark.color.primary.withOpacity(.18),
         labelStyle: base.textTheme.bodyMedium,
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         color: DesignTokens.dark.color.surface.withOpacity(.6),
         margin: EdgeInsets.zero,
       ),
+
       appBarTheme: AppBarTheme(
         backgroundColor: DesignTokens.dark.color.surface,
         foregroundColor: DesignTokens.dark.color.onSurface,

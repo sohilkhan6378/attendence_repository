@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../core/models/attendance_models.dart';
 import '../../shell/controllers/employee_shell_controller.dart';
 
 class EmployeeReportsView extends GetView<EmployeeShellController> {

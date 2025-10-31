@@ -28,24 +28,32 @@ class AdminReportsView extends GetView<AdminShellController> {
           Expanded(
             child: ListView(
               children: [
-                Card(
-                  child: ListTile(
-                    leading: const Icon(Icons.grid_view_outlined),
-                    title: const Text('Per Employee MIS'),
-                    subtitle: const Text('Detailed punches, breaks, approvals'),
-                    trailing: FilledButton(onPressed: () {}, child: const Text('Export XLSX')),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Card(
-                  child: ListTile(
-                    leading: const Icon(Icons.analytics_outlined),
-                    title: const Text('Company summary'),
-                    subtitle: const Text('Attendance trend, break usage, overtime'),
-                    trailing: FilledButton(onPressed: () {}, child: const Text('Export PDF')),
-                  ),
-                ),
-                const SizedBox(height: 24),
+            Column(
+            children: [
+    _buildReportCard(
+    context,
+    icon: Icons.grid_view_outlined,
+    title: 'Per Employee MIS',
+    description: 'Detailed punches, breaks, approvals',
+    buttonText: 'Export XLSX',
+    onPressed: () {},
+    ),
+    const SizedBox(height: 12),
+    _buildReportCard(
+    context,
+    icon: Icons.analytics_outlined,
+    title: 'Company summary',
+    description: 'Attendance trend, break usage, overtime',
+    buttonText: 'Export PDF',
+    onPressed: () {},
+    ),
+    ],
+    ),
+
+// Helper widget
+
+
+    const SizedBox(height: 24),
                 Text('Report builder', style: Theme.of(context).textTheme.titleMedium),
                 const SizedBox(height: 12),
                 Card(
@@ -95,6 +103,60 @@ class AdminReportsView extends GetView<AdminShellController> {
             ),
           ),
         ],
+      ),
+    );
+  }
+  Widget _buildReportCard(
+      BuildContext context, {
+        required IconData icon,
+        required String title,
+        required String description,
+        required String buttonText,
+        required VoidCallback onPressed,
+      }) {
+    return Card(
+      //color: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(color: Colors.grey.shade300),
+      ),
+      elevation: 0,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(icon, size: 28, color: Colors.blueGrey),
+                const SizedBox(width: 12),
+                Text(
+                  title,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
+            const SizedBox(height: 6),
+            Text(
+              description,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: Colors.grey[700]),
+            ),
+            const SizedBox(height: 12),
+            Align(
+              alignment: Alignment.centerRight,
+              child: FilledButton(
+                onPressed: onPressed,
+                child: Text(buttonText),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

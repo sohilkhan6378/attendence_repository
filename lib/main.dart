@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import 'app/bindings/app_binding.dart';
 import 'app/routes/app_pages.dart';
+import 'app/routes/app_routes.dart';
 import 'app/themes/app_theme.dart';
 import 'core/localization/app_translations.dart';
 

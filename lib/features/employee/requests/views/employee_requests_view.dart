@@ -74,7 +74,7 @@ class EmployeeRequestsView extends GetView<EmployeeShellController> {
               Text('Create request', style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 16),
               DropdownButtonFormField<RequestType>(
-                value: selectedType,
+                initialValue: selectedType,
                 decoration: const InputDecoration(labelText: 'Issue type'),
                 items: const [
                   DropdownMenuItem(value: RequestType.missingPunch, child: Text('Missing punch')),

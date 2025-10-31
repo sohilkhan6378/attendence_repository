@@ -79,6 +79,36 @@ class _ProfileHeader extends StatelessWidget {
                       _InfoChip(label: 'Shift · ${profile.shift.name}', icon: Icons.schedule_outlined),
                     ],
                   ),
+                  SizedBox(height: 15,),
+
+                  Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey.withOpacity(0.3)),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(children: [
+                      Icon(Icons.upload, size: 30,),
+                      SizedBox(width: 8,),
+                      Text('Upload Documents',style: TextTheme.of(context).bodyMedium,)
+                    ],),
+                  ),
+                  SizedBox(height: 18,),
+                  Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey.withOpacity(0.3)),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 5.0),
+                      child: Row(children: [
+                        Icon(Icons.generating_tokens_outlined, size: 30,),
+                        SizedBox(width: 8,),
+                        Text('Generate Salary Slip',style: TextTheme.of(context).bodyMedium,)
+                      ],),
+                    ),
+                  )
                 ],
               ),
             ),

@@ -18,7 +18,7 @@ class EmployeeHomeView extends GetView<EmployeeShellController> {
         final today = controller.todayRecord.value;
         final policy = controller.policy.value;
         return CustomScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          //padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           slivers: [
             SliverToBoxAdapter(
               child: _HeaderSection(profile: controller.profile.value, policy: policy),
@@ -78,9 +78,9 @@ class _HeaderSection extends StatelessWidget {
         ),
         if (policy != null)
           Chip(
-            label: Text(policy.status.label),
-            backgroundColor: policy.status.color.withOpacity(.12),
-            avatar: Icon(Icons.verified, color: policy.status.color, size: 18),
+            label: Text(policy!.status.label),
+            backgroundColor: policy!.status.color.withOpacity(.12),
+            avatar: Icon(Icons.verified, color: policy!.status.color, size: 18),
           ),
       ],
     );
@@ -138,7 +138,9 @@ class _PrimaryCard extends StatelessWidget {
             if (today == null)
               _PreCheckIn(policy: policy)
             else ...[
-              _PostCheckIn(today: today, tokens: tokens),
+              if (today != null) ...[
+                _PostCheckIn(today: today!, tokens: tokens),
+              ]
             ],
           ],
         ),
@@ -275,8 +277,8 @@ class _QuickStats extends StatelessWidget {
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-        childAspectRatio: 3.3,
+        mainAxisSpacing: 0,
+        childAspectRatio: 2.5,
       ),
       children: [
         _StatCard(title: 'Total time', value: _duration(total), icon: 'assets/icons/check_in.svg'),
@@ -338,12 +340,12 @@ class _SmartAlerts extends StatelessWidget {
       return const SizedBox.shrink();
     }
     final alerts = <String>[];
-    if (policy.triggersHalfDay) {
+    if (policy!.triggersHalfDay) {
       alerts.add('Half Day applied — submit regularization if approved by manager.');
-    } else if (policy.status == AttendanceStatus.late) {
+    } else if (policy!.status == AttendanceStatus.late) {
       alerts.add('You\'re nearing the 10:30 AM cutoff.');
     }
-    if (policy.requiresCheckout) {
+    if (policy!.requiresCheckout) {
       alerts.add('Remember to checkout before auto checkout at 8:00 PM.');
     }
     if (alerts.isEmpty) return const SizedBox.shrink();
@@ -417,6 +419,38 @@ class _RecentActivityList extends StatelessWidget {
                   : null,
             ),
           ),
+        ),
+      ],
+    );
+  }
+}
+class _TimeTile extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String value;
+
+  const _TimeTile({
+    required this.icon,
+    required this.label,
+    required this.value,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon, color: Colors.blueAccent),
+        const SizedBox(width: 8),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(label,
+                style: const TextStyle(
+                    fontSize: 12, color: Colors.grey, fontWeight: FontWeight.w500)),
+            Text(value,
+                style: const TextStyle(
+                    fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold)),
+          ],
         ),
       ],
     );

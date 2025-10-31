@@ -28,13 +28,9 @@ class AppColorScheme {
     onError: Color(0xFFFFFFFF),
     errorContainer: Color(0xFFF9DEDC),
     onErrorContainer: Color(0xFF410E0B),
-
-    // Background & Surface
-    background: Color(0xFFF9FAFB),
-    onBackground: Color(0xFF111827),
     surface: Color(0xFFFFFFFF),
     onSurface: Color(0xFF111827),
-    surfaceVariant: Color(0xFFF3F4F6),
+    surfaceContainerHighest: Color(0xFFF3F4F6),
     onSurfaceVariant: Color(0xFF4B5563),
 
     // Outline
@@ -76,13 +72,9 @@ class AppColorScheme {
     onError: Color(0xFFB71C1C),
     errorContainer: Color(0xFFC62828),
     onErrorContainer: Color(0xFFF9DEDC),
-
-    // Background & Surface
-    background: Color(0xFF111827),
-    onBackground: Color(0xFFF9FAFB),
     surface: Color(0xFF1F2937),
     onSurface: Color(0xFFF9FAFB),
-    surfaceVariant: Color(0xFF374151),
+    surfaceContainerHighest: Color(0xFF374151),
     onSurfaceVariant: Color(0xFFD1D5DB),
 
     // Outline

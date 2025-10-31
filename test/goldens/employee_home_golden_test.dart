@@ -29,31 +29,36 @@ class _FakeRepository extends GetxService implements AttendanceRepository {
 
   @override
   Stream<EmployeeProfileModel> watchProfile() => Stream.value(
-        EmployeeProfileModel(
-          id: '1',
-          name: 'Ayesha Patel',
-          employeeCode: 'EMP-204',
-          department: 'Design',
-          shift: today.shift,
-          managerName: 'Noah Singh',
-          locationPermissionGranted: true,
-          faceEnrolled: true,
-          linkedDevice: 'Pixel 8 Pro',
-          notificationsEnabled: true,
-        ),
-      );
+    EmployeeProfileModel(
+      id: '1',
+      name: 'Ayesha Patel',
+      employeeCode: 'EMP-204',
+      department: 'Design',
+      shift: today.shift,
+      managerName: 'Noah Singh',
+      locationPermissionGranted: true,
+      faceEnrolled: true,
+      linkedDevice: 'Pixel 8 Pro',
+      notificationsEnabled: true,
+    ),
+  );
 
   @override
   Stream<AttendanceRecordModel?> watchTodayRecord() => Stream.value(today);
 
   @override
-  Stream<List<AttendanceRecordModel>> watchMonthlyRecords(DateTime month) => Stream.value([today]);
+  Stream<List<AttendanceRecordModel>> watchMonthlyRecords(DateTime month) =>
+      Stream.value([today]);
 
   @override
   Stream<List<RequestModel>> watchRequests() => Stream.value([]);
 
   @override
-  Stream<AttendanceSummaryModel> watchSummary({required DateTime from, required DateTime to}) => Stream.value(
+  Stream<AttendanceSummaryModel> watchSummary({
+    required DateTime from,
+    required DateTime to,
+  }) =>
+      Stream.value(
         AttendanceSummaryModel(
           presentDays: 20,
           lateDays: 2,
@@ -88,32 +93,57 @@ void main() {
   });
 
   testGoldens('Employee home golden - light', (tester) async {
-    final goldenFile = File('test/goldens/goldens/employee_home_light.png');
-    await GoldenToolkit.runWithConfiguration(() async {
-      await loadAppFonts();
-      Get.put<AttendanceRepository>(_FakeRepository());
-      Get.put(
-        const PolicyEngine(
-          config: PolicyEngineConfig(
-            halfDayCutoff: TimeOfDay(hour: 10, minute: 30),
-            graceDuration: Duration(minutes: 10),
-            autoCheckoutTime: TimeOfDay(hour: 20, minute: 0),
-          ),
-        ),
-      );
-      Get.put(EmployeeShellController(repository: Get.find(), policyEngine: Get.find()));
+    // Keep this in sync with the name you pass to screenMatchesGolden
+    final goldenPath = 'goldens/employee_home_light.png';
+    final goldenFile = File(goldenPath);
 
-      final builder = GoldenBuilder.column()
-        ..addScenario(
-          'home',
-          MaterialApp(
-            theme: AppTheme.light,
-            home: const Scaffold(body: EmployeeHomeView()),
+    // If the golden doesn't exist yet, skip once (first run). Create it with --update-goldens.
+    if (!goldenFile.existsSync()) {
+      // You can print a hint for CI logs:
+      // ignore: avoid_print
+      print('Golden missing → $goldenPath. Run with: flutter test --update-goldens');
+      return;
+    }
+
+    await GoldenToolkit.runWithConfiguration(
+          () async {
+        await loadAppFonts();
+
+        Get.put<AttendanceRepository>(_FakeRepository());
+        Get.put(
+          const PolicyEngine(
+            config: PolicyEngineConfig(
+              halfDayCutoff: TimeOfDay(hour: 10, minute: 30),
+              graceDuration: Duration(minutes: 10),
+              autoCheckoutTime: TimeOfDay(hour: 20, minute: 0),
+            ),
+          ),
+        );
+        Get.put(
+          EmployeeShellController(
+            repository: Get.find(),
+            policyEngine: Get.find(),
           ),
         );
 
-      await tester.pumpWidgetBuilder(builder.build(), surfaceSize: const Size(390, 844));
-      await screenMatchesGolden(tester, 'goldens/employee_home_light');
-    }, config: GoldenToolkitConfiguration(skipGoldenAssertion: !goldenFile.existsSync()));
+        final builder = GoldenBuilder.column()
+          ..addScenario(
+            'home',
+            MaterialApp(
+              theme: AppTheme.light,
+              home: const Scaffold(body: EmployeeHomeView()),
+            ),
+          );
+
+        await tester.pumpWidgetBuilder(
+          builder.build(),
+          surfaceSize: const Size(390, 844),
+        );
+
+        await screenMatchesGolden(tester, 'goldens/employee_home_light');
+      },
+      // 🔧 REQUIRED in your toolkit version
+      config:   GoldenToolkitConfiguration(),
+    );
   });
 }

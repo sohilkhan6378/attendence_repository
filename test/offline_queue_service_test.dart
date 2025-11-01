@@ -7,7 +7,7 @@ import 'package:attendence_management_software/services/offline_queue_service.da
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  group('OfflineQueueService persistence', () { // स्थायी स्टोरेज से जुड़े टेस्ट
+  group('OfflineQueueService with Drift', () {
     late OfflineDatabase database;
     late OfflineQueueService service;
 

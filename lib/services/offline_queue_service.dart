@@ -6,7 +6,7 @@ import 'package:uuid/uuid.dart';
 import '../modules/attendance/models/attendance_models.dart';
 import 'local_db/offline_database.dart';
 
-/// OfflineQueueService Drift डेटाबेस का उपयोग कर पेंडिंग इवेंट्स को स्टोर करता है।
+/// OfflineQueueService अब Drift डेटाबेस का उपयोग कर पेंडिंग इवेंट्स को स्टोर करता है।
 class OfflineQueueService extends GetxService {
   OfflineQueueService({OfflineDatabase? database})
       : _database = database,

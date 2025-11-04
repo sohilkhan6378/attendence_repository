@@ -1,0 +1,45 @@
+[tool.poetry]
+name = "attendance-backend"
+version = "0.1.0"
+description = "Production-ready Attendance Management backend"
+authors = ["Your Team <team@example.com>"]
+packages = [{ include = "attendance_backend" }, { include = "apps" }]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.0"
+djangorestframework = "^3.15"
+djangorestframework-simplejwt = "^5.3"
+django-environ = "^0.11"
+django-filter = "^24.2"
+drf-spectacular = "^0.27"
+django-cors-headers = "^4.3"
+psycopg = { version = "^3.1", extras = ["binary"] }
+redis = "^5.0"
+celery = "^5.3"
+openpyxl = "^3.1"
+weasyprint = { version = "^61.0", optional = true }
+python-dotenv = "^1.0"
+Pillow = "^10.3"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.2"
+pytest-django = "^4.8"
+factory_boy = "^3.3"
+black = "^24.4"
+ruff = "^0.4"
+mypy = "^1.8"
+
+[build-system]
+requires = ["poetry-core>=1.6.1"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 100
+
+[tool.black]
+line-length = 100
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
